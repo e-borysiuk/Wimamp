@@ -95,6 +95,27 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="pause.png" />
+    <Resource Include="play.png" />
+    <Resource Include="stop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="vizual.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="backward.png" />
+    <Resource Include="forward.png" />
+    <Resource Include="next.png" />
+    <Resource Include="previous.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="mute.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="loop.png" />
+    <Resource Include="shuffle.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
