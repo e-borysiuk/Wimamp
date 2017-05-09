@@ -23,6 +23,8 @@ namespace Wimamp
         public MainWindow()
         {
             InitializeComponent();
+            PlaylistWindow okno = new PlaylistWindow();
+            okno.Show();
         }
     }
 }

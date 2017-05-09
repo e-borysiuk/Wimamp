@@ -32,7 +32,7 @@
             </Menu>
         </Border>
         <Grid DockPanel.Dock="Top">
-            <Border Background="LightSlateGray" Margin="10" BorderBrush="#FF000000" BorderThickness="2" CornerRadius="8,8,8,8" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Border Background="LightSlateGray" Margin="5" BorderBrush="#FF000000" BorderThickness="2" CornerRadius="8,8,8,8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <StackPanel>
                     <Grid Name="GridInfo">
                         <Grid.ColumnDefinitions>
