@@ -7,18 +7,10 @@
         mc:Ignorable="d"
         Title="PlaylistWindow" SizeToContent="Height" Width="415" WindowStartupLocation="CenterScreen"  AllowsTransparency="True"  WindowStyle="None">
     <Window.Resources>
-        <Style x:Key="PlaylistItemLabel">
-            <Setter Property="Control.Foreground" Value="DarkOrange"></Setter>
-        </Style>
-        <Style x:Key="PlaylistItemPlayButton">
-            <Setter Property="Control.Background" Value="Transparent"></Setter>
-            <Setter Property="Control.BorderBrush" Value="Transparent"></Setter>
-            <Setter Property="Control.FocusVisualStyle" Value="{x:Null}"></Setter>
-        </Style>
+        <ResourceDictionary Source="styles.xaml" />
     </Window.Resources>
     <DockPanel>
-        <Border DockPanel.Dock="Top" BorderBrush="DimGray" BorderThickness="2" MouseLeftButtonDown="PlaylistWindow_OnMouseLeftButtonDown">
-            <Menu>
+        <Menu DockPanel.Dock="Top" Background="DimGray" FontWeight="Bold" Foreground="Black" MouseLeftButtonDown="PlaylistWindow_OnMouseLeftButtonDown">
                 <MenuItem Header="File">
                     <MenuItem Header="_New playlist" />
                     <MenuItem Header="_Open playlist" />
@@ -36,17 +28,16 @@
                     <MenuItem Header="_Descending"></MenuItem>
                 </MenuItem>
             </Menu>
-        </Border>
-        <Grid Background="Silver">
-            <Border Background="LightSlateGray" Margin="5" Padding="5" BorderBrush="#FF000000" BorderThickness="2" CornerRadius="8,8,8,8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  >
+        <Grid Background="#181818">
+            <Border Style="{StaticResource BorderStyle}" Margin="5" Padding="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  >
                 <ListBox Background="Black">
                     <!-- single item -->
                         <StackPanel Orientation="Horizontal" Margin="2">
                             <Label Style="{StaticResource PlaylistItemLabel}">03:47</Label>
                             <Label Style="{StaticResource PlaylistItemLabel}">Good Band - Some Music</Label>
-                            <Button Style="{StaticResource PlaylistItemPlayButton}" Visibility="Visible">
+                            <Button Style="{StaticResource PlaylistItemPlayButton}" Visibility="Visible" Margin="0, 4, 0, 0">
                                 <Button.Content>
-                                    <Image Source="playIcon.png" Width="12" Height="12"></Image>
+                                    <Image Source="playIcon.png" Width="15" Height="15"></Image>
                                 </Button.Content>
                             </Button>
                         </StackPanel>

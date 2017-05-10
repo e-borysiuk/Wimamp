@@ -16,6 +16,8 @@ using System.Windows.Shapes;
 
 namespace Wimamp
 {
+    // ciemniejszy #076CA6
+    // jesniejszy #00AADD
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>

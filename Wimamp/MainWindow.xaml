@@ -5,10 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wimamp"
         mc:Ignorable="d"
-        Title="Wimamp" SizeToContent="WidthAndHeight" Background="Silver" Loaded="MainWindow_OnLoaded">
+        Title="Wimamp" SizeToContent="WidthAndHeight" Loaded="MainWindow_OnLoaded" Background="#181818">
+    <Window.Resources>
+        <ResourceDictionary Source="styles.xaml" />
+    </Window.Resources>
     <DockPanel>
-        <Border DockPanel.Dock="Top" BorderBrush="DimGray" BorderThickness="2">
-            <Menu>
+            <Menu DockPanel.Dock="Top" Background="DimGray" FontWeight="Bold" Foreground="Black">
                 <MenuItem Header="File">
                     <MenuItem Header="_Open file" />
                     <MenuItem Header="_Open folder" />
@@ -30,9 +32,8 @@
                 </MenuItem>
                 <MenuItem Header="Options"></MenuItem>
             </Menu>
-        </Border>
         <Grid DockPanel.Dock="Top">
-            <Border Background="LightSlateGray" Margin="5" BorderBrush="#FF000000" BorderThickness="2" CornerRadius="8,8,8,8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Border Margin="5" Background="#181818" BorderBrush="#FF000000" BorderThickness="2" CornerRadius="8,8,8,8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <StackPanel>
                     <Grid Name="GridInfo">
                         <Grid.ColumnDefinitions>
@@ -45,22 +46,28 @@
                             <RowDefinition Height="Auto"></RowDefinition>
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
-                        <StackPanel Grid.Row="0" Grid.Column="0" Margin="10, 10, 0, 10">
+
+                        <StackPanel Grid.Row="0" Grid.Column="0" Margin="10, 18, 0, 10">
                             <Image Source="pause.png" Width="20" Opacity="0.3"></Image>
                             <Image Source="play.png" Width="20"></Image>
                             <Image Source="stop.png" Width="20" Opacity="0.3"></Image>
                         </StackPanel>
-                        <TextBlock Grid.Row="0" Grid.Column="1" Margin="10" Name="TBsongTime" FontSize="36" FontWeight="Bold">0:00</TextBlock>
-                        <Image Grid.Row="0" Grid.Column="2" Margin="10, 5, 10, 10" Height="70" Source="visualiser.png"></Image>
+                        <Border Style="{StaticResource BorderStyle}" Grid.Row="0" Grid.Column="1" Margin="10, 5, 10, 10" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock Margin="5, 0, 5, 5" Name="TBsongTime" FontSize="36" FontWeight="Bold" Foreground="#00AADD">0:00</TextBlock>
+                        </Border>
+                        <Border Margin="10, 5, 10, 10" Style="{StaticResource BorderStyle}" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Image Margin="2" Height="70" Width="270" Source="visualiser.png"></Image>
+                        </Border>
+                        
                         <StackPanel Grid.Row="0" Grid.Column="3">
-                            <Button Name="BtLoop" Margin="10" Padding="2">
+                            <Button Name="BtLoop" Margin="10" Padding="2" Width="50" Height="35" Style="{StaticResource RoundCorner}">
                                 <Button.Content>
-                                    <Image Source="loop.png" Width="25"></Image>
+                                    <Image Source="loop.png" Width="30"></Image>
                                 </Button.Content>
                             </Button>
-                            <Button Name="BtShuffle" Margin="10, 0, 10, 10">
+                            <Button Name="BtShuffle" Margin="10, 0, 10, 10" Width="50" Height="35" Style="{StaticResource RoundCorner}">
                                 <Button.Content>
-                                    <Image Source="shuffle.png" Width="25"></Image>
+                                    <Image Source="shuffle.png" Width="30"></Image>
                                 </Button.Content>
                             </Button>
                         </StackPanel>
@@ -74,51 +81,62 @@
                             <RowDefinition Height="Auto"></RowDefinition>
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
-                        <Slider Grid.ColumnSpan="2" Maximum="100" MinWidth="360" Margin="10"></Slider>
-                        <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal" Margin="10" HorizontalAlignment="Left">
-                            <Button Name="BtPrevious" HorizontalAlignment="Center">
+                        <Border Style="{StaticResource BorderStyle}" Grid.ColumnSpan="2" Margin="10, 0, 5, 0">
+                            <Slider Maximum="100" MinWidth="360" Margin="10"></Slider>
+                        </Border>
+                        <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal" Margin="10" HorizontalAlignment="Left" >
+                            <StackPanel.Style>
+                                <Style>
+                                    <Style.Resources>
+                                        <Style TargetType="Button" BasedOn="{StaticResource RoundCorner}" />
+                                    </Style.Resources>
+                                </Style>
+                            </StackPanel.Style>
+                            <Button Name="BtPrevious" HorizontalAlignment="Center" Width="50" Height="50" Margin="0, 0, 3, 0" Style="{StaticResource RoundCorner}">
                                 <Button.Content>
-                                    <Image Source="previous.png" Width="30"></Image>
+                                    <Image Source="previous.png" Width="30" Height="30"></Image>
                                 </Button.Content>
                             </Button>
-                            <Button Name="BtBackward" HorizontalAlignment="Center">
+                            <Button Name="BtBackward" HorizontalAlignment="Center" Width="50" Height="50" Margin="0, 0, 3, 0">
                                 <Button.Content>
                                     <Image Source="backward.png" Width="30"></Image>
                                 </Button.Content>
                             </Button>
-                            <Button Name="BtPlay" HorizontalAlignment="Center" Padding="0,2,0,0">
+                            <Button Name="BtPlay" HorizontalAlignment="Center" Width="50" Height="50" Margin="0, 0, 3, 0">
                                 <Button.Content>
-                                    <Image Source="play.png" Width="30"></Image>
+                                    <Image Source="play.png" Width="30" Margin="0, 3, 0, 0"></Image>
                                 </Button.Content>
                             </Button>
-                            <Button Name="BtPause" HorizontalAlignment="Center">
+                            <Button Name="BtPause" HorizontalAlignment="Center" Width="50" Height="50" Margin="0, 0, 3, 0">
                                 <Button.Content>
                                     <Image Source="pause.png" Width="30"></Image>
                                 </Button.Content>
                             </Button>
-                            <Button Name="BtStop" HorizontalAlignment="Center">
+                            <Button Name="BtStop" HorizontalAlignment="Center" Width="50" Height="50" Margin="0, 0, 3, 0">
                                 <Button.Content>
                                     <Image Source="stop.png" Width="30"></Image>
                                 </Button.Content>
                             </Button>
-                            <Button Name="BtForward" HorizontalAlignment="Center">
+                            <Button Name="BtForward" HorizontalAlignment="Center" Width="50" Height="50" Margin="0, 0, 3, 0">
                                 <Button.Content>
                                     <Image Source="forward.png" Width="30"></Image>
                                 </Button.Content>
                             </Button>
-                            <Button Name="BtNext" HorizontalAlignment="Center">
+                            <Button Name="BtNext" HorizontalAlignment="Center" Width="50" Height="50" >
                                 <Button.Content>
                                     <Image Source="next.png" Width="30"></Image>
                                 </Button.Content>
                             </Button>
                         </StackPanel>
                         <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal">
-                            <Button Name="BtMute" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" Padding="1">
+                            <Button Name="BtMute" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" Padding="1" Width="40" Height="40" Style="{StaticResource RoundCorner}">
                                 <Button.Content>
                                     <Image Source="mute.png" Width="30"></Image>
                                 </Button.Content>
                             </Button>
-                            <Slider Maximum="100" MinWidth="100" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5"></Slider>
+                            <Border Style="{StaticResource BorderStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5, 0, 5, 0">
+                                <Slider Maximum="100" MinWidth="100" Margin="3"></Slider>
+                            </Border>
                         </StackPanel>
                     </Grid>
                 </StackPanel>
