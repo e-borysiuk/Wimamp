@@ -5,7 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wimamp"
         mc:Ignorable="d"
-        Title="Wimamp" SizeToContent="WidthAndHeight" Loaded="MainWindow_OnLoaded" Background="#181818">
+        Title="Wimamp" 
+        SizeToContent="WidthAndHeight" 
+        Loaded="MainWindow_OnLoaded"
+        LocationChanged="MainWindow_OnLocationChanged"
+        Background="#181818" 
+        ResizeMode="NoResize">
     <Window.Resources>
         <ResourceDictionary Source="styles.xaml" />
     </Window.Resources>

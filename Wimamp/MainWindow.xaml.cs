@@ -23,16 +23,31 @@ namespace Wimamp
     /// </summary>
     public partial class MainWindow : Window
     {
+        private PlaylistWindow playlist;
+
         public MainWindow()
         {
             InitializeComponent();
-            
         }
 
         private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
-            var playlist = new PlaylistWindow {Owner = this};
+            playlist = new PlaylistWindow {Owner = this};
+            playlist.WindowStartupLocation = WindowStartupLocation.Manual;
+            PlaylistPositioning();
+            playlist.Width = this.Width + 2;
             playlist.Show(); 
+        }
+
+        private void MainWindow_OnLocationChanged(object sender, EventArgs e)
+        {
+            PlaylistPositioning();
+        }
+
+        private void PlaylistPositioning()
+        {
+            playlist.Top = this.Top + this.Height - 7;
+            playlist.Left = this.Left - 1;
         }
     }
 }

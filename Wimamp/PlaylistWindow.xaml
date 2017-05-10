@@ -5,12 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wimamp"
         mc:Ignorable="d"
-        Title="PlaylistWindow" SizeToContent="Height" Width="415" WindowStartupLocation="CenterScreen"  AllowsTransparency="True"  WindowStyle="None">
+        SizeToContent="Height" Width="415" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Window.Resources>
         <ResourceDictionary Source="styles.xaml" />
     </Window.Resources>
     <DockPanel>
-        <Menu DockPanel.Dock="Top" Background="DimGray" FontWeight="Bold" Foreground="Black" MouseLeftButtonDown="PlaylistWindow_OnMouseLeftButtonDown">
+        <Menu DockPanel.Dock="Top" Background="DimGray" FontWeight="Bold" Foreground="Black">
                 <MenuItem Header="File">
                     <MenuItem Header="_New playlist" />
                     <MenuItem Header="_Open playlist" />
@@ -28,10 +28,10 @@
                     <MenuItem Header="_Descending"></MenuItem>
                 </MenuItem>
             </Menu>
-        <Grid Background="#181818">
-            <Border Style="{StaticResource BorderStyle}" Margin="5" Padding="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  >
-                <ListBox Background="Black">
-                    <!-- single item -->
+            <Grid Background="#181818">
+                <Border Style="{StaticResource BorderStyle}" Margin="5" Padding="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  >
+                    <ListBox Background="Black">
+                        <!-- single item -->
                         <StackPanel Orientation="Horizontal" Margin="2">
                             <Label Style="{StaticResource PlaylistItemLabel}">03:47</Label>
                             <Label Style="{StaticResource PlaylistItemLabel}">Good Band - Some Music</Label>
@@ -41,17 +41,17 @@
                                 </Button.Content>
                             </Button>
                         </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="2">
-                        <Label Style="{StaticResource PlaylistItemLabel}">03:47</Label>
-                        <Label Style="{StaticResource PlaylistItemLabel}">Good Band - Some Music</Label>
-                        <Button Style="{StaticResource PlaylistItemPlayButton}" Visibility="Hidden">
-                            <Button.Content>
-                                <Image Source="playIcon.png" Width="12" Height="12"></Image>
-                            </Button.Content>
-                        </Button>
-                    </StackPanel>
-                </ListBox>
-            </Border>
-        </Grid>
+                        <StackPanel Orientation="Horizontal" Margin="2">
+                            <Label Style="{StaticResource PlaylistItemLabel}">03:47</Label>
+                            <Label Style="{StaticResource PlaylistItemLabel}">Good Band - Some Music</Label>
+                            <Button Style="{StaticResource PlaylistItemPlayButton}" Visibility="Hidden">
+                                <Button.Content>
+                                    <Image Source="playIcon.png" Width="12" Height="12"></Image>
+                                </Button.Content>
+                            </Button>
+                        </StackPanel>
+                    </ListBox>
+                </Border>
+            </Grid>
     </DockPanel>
 </Window>
