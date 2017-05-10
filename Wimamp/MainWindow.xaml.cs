@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,8 +24,13 @@ namespace Wimamp
         public MainWindow()
         {
             InitializeComponent();
-            PlaylistWindow okno = new PlaylistWindow();
-            okno.Show();
+            
+        }
+
+        private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            var playlist = new PlaylistWindow {Owner = this};
+            playlist.Show(); 
         }
     }
 }

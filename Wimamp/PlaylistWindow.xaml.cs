@@ -23,5 +23,10 @@ namespace Wimamp
         {
             InitializeComponent();
         }
+
+        private void PlaylistWindow_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.DragMove();
+        }
     }
 }

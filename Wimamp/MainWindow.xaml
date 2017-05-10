@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wimamp"
         mc:Ignorable="d"
-        Title="Wimamp" SizeToContent="WidthAndHeight" Background="Silver">
+        Title="Wimamp" SizeToContent="WidthAndHeight" Background="Silver" Loaded="MainWindow_OnLoaded">
     <DockPanel>
         <Border DockPanel.Dock="Top" BorderBrush="DimGray" BorderThickness="2">
             <Menu>
@@ -51,7 +51,7 @@
                             <Image Source="stop.png" Width="20" Opacity="0.3"></Image>
                         </StackPanel>
                         <TextBlock Grid.Row="0" Grid.Column="1" Margin="10" Name="TBsongTime" FontSize="36" FontWeight="Bold">0:00</TextBlock>
-                        <Image Grid.Row="0" Grid.Column="2" Margin="10, 5, 10, 10" Height="70" Source="vizual.png"></Image>
+                        <Image Grid.Row="0" Grid.Column="2" Margin="10, 5, 10, 10" Height="70" Source="visualiser.png"></Image>
                         <StackPanel Grid.Row="0" Grid.Column="3">
                             <Button Name="BtLoop" Margin="10" Padding="2">
                                 <Button.Content>
