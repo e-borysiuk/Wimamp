@@ -8,6 +8,7 @@ using System.Windows.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -26,17 +27,17 @@ namespace Wimamp
     public partial class MainWindow : Window
     {
         private PlaylistWindow playlist;
-        public static MediaPlayer mediaPlayer = new MediaPlayer();
-        private bool userIsDraggingSlider = false;
         private bool mediaPlayerIsPlaying = false;
+        private bool userIsDraggingSlider = false;
 
         public MainWindow()
         {
             InitializeComponent();
-            CommandBinding OpenFileCommandBind = new CommandBinding();
-            OpenFileCommandBind.Command = ApplicationCommands.Open;
-            OpenFileCommandBind.Executed += OpenMusicFile;
-            this.CommandBindings.Add(OpenFileCommandBind);
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick += timer_Tick;
+            timer.Start();
+
         }
 
         private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
@@ -45,7 +46,7 @@ namespace Wimamp
             playlist.WindowStartupLocation = WindowStartupLocation.Manual;
             PlaylistPositioning();
             playlist.Width = this.Width + 2;
-            playlist.Show(); 
+            playlist.Show();
         }
 
         private void MainWindow_OnLocationChanged(object sender, EventArgs e)
@@ -59,73 +60,83 @@ namespace Wimamp
             playlist.Left = this.Left - 1;
         }
 
-        private void TimerTick(object sender, EventArgs e)
+        //
+
+        private void timer_Tick(object sender, EventArgs e)
         {
-            if(mediaPlayer.Source != null)
+            if ((MePlayer.Source != null) && (MePlayer.NaturalDuration.HasTimeSpan) && (!userIsDraggingSlider))
             {
-                // mediaPlayer.NaturalDuration.TimeSpan.ToString(@"mm\:ss") <-- cała piosenka tyle trwa
-                LbSongTime.Content = String.Format("{0}", mediaPlayer.Position.ToString(@"mm\:ss"));
-            }
-            else
-            {
-                LbSongTime.Content = "00:00";
+                SlProgress.Minimum = 0;
+                SlProgress.Maximum = MePlayer.NaturalDuration.TimeSpan.TotalSeconds;
+                SlProgress.Value = MePlayer.Position.TotalSeconds;
             }
         }
 
-        private void OpenMusicFile(object sender, ExecutedRoutedEventArgs e)
+        private void Open_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            OpenFileDialog dlg = new OpenFileDialog();
-            dlg.Filter = "MP3 files (*.mp3)|*.mp3|All files (*.*)|*.*";
-            if (dlg.ShowDialog() == true)
-            {
-                mediaPlayer.Open(new Uri(dlg.FileName));
-            }
-            DispatcherTimer dt = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(1) };
-            dt.Tick += TimerTick;
-            dt.Start();
-            
-
-            e.Handled = true;
+            e.CanExecute = true;
         }
 
-        private void BtPlay_Click(object sender, RoutedEventArgs e)
+        private void Open_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            if(mediaPlayer.Source != null)
-            {
-                mediaPlayer.Play();
-            }
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Media files (*.mp3;*.mpg;*.mpeg)|*.mp3;*.mpg;*.mpeg|All files (*.*)|*.*";
+            if (openFileDialog.ShowDialog() == true)
+                MePlayer.Source = new Uri(openFileDialog.FileName);
         }
 
-        private void BtStop_Click(object sender, RoutedEventArgs e)
+        private void Play_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            if (mediaPlayer.Source != null)
-            {
-                mediaPlayer.Stop();
-            }
+            e.CanExecute = (MePlayer != null) && (MePlayer.Source != null);
         }
 
-        private void BtPause_Click(object sender, RoutedEventArgs e)
+        private void Play_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            if (mediaPlayer.Source != null)
-            {
-                mediaPlayer.Pause();
-            }
+            MePlayer.Play();
+            mediaPlayerIsPlaying = true;
         }
 
-        private void SlProgress_DragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
+        private void Pause_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = mediaPlayerIsPlaying;
+        }
+
+        private void Pause_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            MePlayer.Pause();
+        }
+
+        private void Stop_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = mediaPlayerIsPlaying;
+        }
+
+        private void Stop_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            MePlayer.Stop();
+            mediaPlayerIsPlaying = false;
+        }
+
+        private void SlProgress_DragStarted(object sender, DragStartedEventArgs e)
         {
             userIsDraggingSlider = true;
         }
 
-        private void SlProgress_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
+        private void SlProgress_DragCompleted(object sender, DragCompletedEventArgs e)
         {
             userIsDraggingSlider = false;
-            mediaPlayer.Position = TimeSpan.FromSeconds(SlProgress.Value);
+            MePlayer.Position = TimeSpan.FromSeconds(SlProgress.Value);
         }
 
         private void SlProgress_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            LbSongTime.Content = TimeSpan.FromSeconds(SlProgress.Value).ToString(@"mm\:ss");
+            LbSongTime.Content = TimeSpan.FromSeconds(SlProgress.Value).ToString(@"hh\:mm\:ss");
         }
+
+        private void Grid_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            MePlayer.Volume += (e.Delta > 0) ? 0.1 : -0.1;
+        }
+
     }
 }
