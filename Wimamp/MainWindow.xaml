@@ -17,7 +17,7 @@
     <DockPanel>
             <Menu DockPanel.Dock="Top" Background="DimGray" FontWeight="Bold" Foreground="Black">
                 <MenuItem Header="File">
-                    <MenuItem Header="_Open file" />
+                    <MenuItem Header="_Open file" Command="ApplicationCommands.Open" />
                     <MenuItem Header="_Open folder" />
                     <MenuItem Header="_Open playlist" />
                     <MenuItem Header="_New playlist" />
@@ -58,7 +58,7 @@
                             <Image Source="stop.png" Width="20" Opacity="0.3"></Image>
                         </StackPanel>
                         <Border Style="{StaticResource BorderStyle}" Grid.Row="0" Grid.Column="1" Margin="10, 5, 10, 10" VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <TextBlock Margin="5, 0, 5, 5" Name="TBsongTime" FontSize="36" FontWeight="Bold" Foreground="#00AADD">0:00</TextBlock>
+                            <Label Margin="5, 0, 5, 5" Name="LbSongTime" FontSize="36" FontWeight="Bold" Foreground="#00AADD">0:00</Label>
                         </Border>
                         <Border Margin="10, 5, 10, 10" Style="{StaticResource BorderStyle}" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <Image Margin="2" Height="70" Width="270" Source="visualiser.png"></Image>
@@ -87,7 +87,11 @@
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
                         <Border Style="{StaticResource BorderStyle}" Grid.ColumnSpan="2" Margin="10, 0, 5, 0">
-                            <Slider Maximum="100" MinWidth="360" Margin="10"></Slider>
+                            <Slider Name="SlProgress" 
+                                    Thumb.DragStarted="SlProgress_DragStarted" 
+                                    Thumb.DragCompleted="SlProgress_DragCompleted"
+                                    ValueChanged="SlProgress_ValueChanged"
+                                    Maximum="100" MinWidth="360" Margin="10"></Slider>
                         </Border>
                         <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal" Margin="10" HorizontalAlignment="Left" >
                             <StackPanel.Style>
@@ -107,17 +111,17 @@
                                     <Image Source="backward.png" Width="30"></Image>
                                 </Button.Content>
                             </Button>
-                            <Button Name="BtPlay" HorizontalAlignment="Center" Width="50" Height="50" Margin="0, 0, 3, 0">
+                            <Button Name="BtPlay" HorizontalAlignment="Center" Width="50" Height="50" Margin="0, 0, 3, 0" Click="BtPlay_Click">
                                 <Button.Content>
                                     <Image Source="play.png" Width="30" Margin="0, 3, 0, 0"></Image>
                                 </Button.Content>
                             </Button>
-                            <Button Name="BtPause" HorizontalAlignment="Center" Width="50" Height="50" Margin="0, 0, 3, 0">
+                            <Button Name="BtPause" HorizontalAlignment="Center" Width="50" Height="50" Margin="0, 0, 3, 0" Click="BtPause_Click">
                                 <Button.Content>
                                     <Image Source="pause.png" Width="30"></Image>
                                 </Button.Content>
                             </Button>
-                            <Button Name="BtStop" HorizontalAlignment="Center" Width="50" Height="50" Margin="0, 0, 3, 0">
+                            <Button Name="BtStop" HorizontalAlignment="Center" Width="50" Height="50" Margin="0, 0, 3, 0" Click="BtStop_Click">
                                 <Button.Content>
                                     <Image Source="stop.png" Width="30"></Image>
                                 </Button.Content>
@@ -140,7 +144,7 @@
                                 </Button.Content>
                             </Button>
                             <Border Style="{StaticResource BorderStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5, 0, 5, 0">
-                                <Slider Maximum="100" MinWidth="100" Margin="3"></Slider>
+                                <Slider Name="PbVolume" Maximum="1" MinWidth="100" Margin="3"></Slider>
                             </Border>
                         </StackPanel>
                     </Grid>
