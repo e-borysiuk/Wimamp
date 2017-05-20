@@ -33,9 +33,8 @@ namespace Wimamp
         public MainWindow()
         {
             InitializeComponent();
-            DispatcherTimer timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(1);
-            timer.Tick += timer_Tick;
+            DispatcherTimer timer = new DispatcherTimer {Interval = TimeSpan.FromSeconds(1)};
+            timer.Tick += Timer_Tick;
             timer.Start();
 
         }
@@ -62,7 +61,7 @@ namespace Wimamp
 
         //
 
-        private void timer_Tick(object sender, EventArgs e)
+        private void Timer_Tick(object sender, EventArgs e)
         {
             if ((MePlayer.Source != null) && (MePlayer.NaturalDuration.HasTimeSpan) && (!userIsDraggingSlider))
             {
@@ -79,8 +78,10 @@ namespace Wimamp
 
         private void Open_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Media files (*.mp3;*.mpg;*.mpeg)|*.mp3;*.mpg;*.mpeg|All files (*.*)|*.*";
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "Media files (*.mp3;*.mpg;*.mpeg)|*.mp3;*.mpg;*.mpeg|All files (*.*)|*.*"
+            };
             if (openFileDialog.ShowDialog() == true)
                 MePlayer.Source = new Uri(openFileDialog.FileName);
         }
@@ -130,7 +131,7 @@ namespace Wimamp
 
         private void SlProgress_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            LbSongTime.Content = TimeSpan.FromSeconds(SlProgress.Value).ToString(@"hh\:mm\:ss");
+            LbSongTime.Content = TimeSpan.FromSeconds(SlProgress.Value).ToString(@"mm\:ss");
         }
 
         private void Grid_MouseWheel(object sender, MouseWheelEventArgs e)
@@ -147,6 +148,16 @@ namespace Wimamp
         {
             MePlayer.IsMuted = !MePlayer.IsMuted;
             SlVolume.IsEnabled = (!MePlayer.IsMuted);
+        }
+
+        private void NextTrack_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            //to do with playlist EMIL
+        }
+
+        private void PreviousTrack_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            //to do with playlist EMIL
         }
     }
 }

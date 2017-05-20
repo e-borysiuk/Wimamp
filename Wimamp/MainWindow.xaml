@@ -16,16 +16,18 @@
     </Window.Resources>
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Open" CanExecute="Open_CanExecute" Executed="Open_Executed" />
-        <CommandBinding Command="MediaCommands.Play" CanExecute="Play_CanExecute" Executed="Play_Executed" />
+        <CommandBinding Command="MediaCommands.Play" CanExecute="Play_CanExecute" Executed="Play_Executed"  />
         <CommandBinding Command="MediaCommands.Pause" CanExecute="Pause_CanExecute" Executed="Pause_Executed" />
         <CommandBinding Command="MediaCommands.Stop" CanExecute="Stop_CanExecute" Executed="Stop_Executed" />
         <CommandBinding Command="MediaCommands.MuteVolume" CanExecute="MuteVolume_CanExecute" Executed="MuteVolume_Executed"></CommandBinding>
+        <CommandBinding Command="MediaCommands.NextTrack" Executed="NextTrack_Executed"></CommandBinding>
+        <CommandBinding Command="MediaCommands.PreviousTrack" Executed="PreviousTrack_Executed"></CommandBinding>
     </Window.CommandBindings>
-    <DockPanel>
+    <DockPanel MouseWheel="Grid_MouseWheel">
             <Menu DockPanel.Dock="Top" Background="DimGray" FontWeight="Bold" Foreground="Black">
                 <MenuItem Header="File">
                     <MenuItem Header="_Open file" Command="ApplicationCommands.Open" />
-                    <MenuItem Header="_Open folder" />
+                    <MenuItem Header="_Open folder"/>
                     <MenuItem Header="_Open playlist" />
                     <MenuItem Header="_New playlist" />
                     <MenuItem Header="_Save playlist" />
@@ -33,12 +35,12 @@
                     <MenuItem Header="_Exit" />
                 </MenuItem>
                 <MenuItem Header="Play">
-                    <MenuItem Header="_Play" />
-                    <MenuItem Header="_Pause" />
-                    <MenuItem Header="_Stop" />
+                    <MenuItem Header="_Play" Command="MediaCommands.Play" />
+                    <MenuItem Header="_Pause" Command="MediaCommands.Pause"/>
+                    <MenuItem Header="_Stop" Command="MediaCommands.Stop"/>
                     <Separator />
-                    <MenuItem Header="_Forward" />
-                    <MenuItem Header="_Backward" />
+                    <MenuItem Header="_Forward" Command="MediaCommands.NextTrack"/>
+                    <MenuItem Header="_Backward" Command="MediaCommands.PreviousTrack"/>
                     <Separator />
                     <MenuItem IsCheckable="True" Header="_Shuffle" />
                 </MenuItem>
