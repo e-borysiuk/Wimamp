@@ -19,6 +19,7 @@
         <CommandBinding Command="MediaCommands.Play" CanExecute="Play_CanExecute" Executed="Play_Executed" />
         <CommandBinding Command="MediaCommands.Pause" CanExecute="Pause_CanExecute" Executed="Pause_Executed" />
         <CommandBinding Command="MediaCommands.Stop" CanExecute="Stop_CanExecute" Executed="Stop_Executed" />
+        <CommandBinding Command="MediaCommands.MuteVolume" CanExecute="MuteVolume_CanExecute" Executed="MuteVolume_Executed"></CommandBinding>
     </Window.CommandBindings>
     <DockPanel>
             <Menu DockPanel.Dock="Top" Background="DimGray" FontWeight="Bold" Foreground="Black">
@@ -145,13 +146,13 @@
                             </Button>
                         </StackPanel>
                         <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal">
-                            <Button Name="BtMute" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" Padding="1" Width="40" Height="40" Style="{StaticResource RoundCorner}">
+                            <Button Name="BtMute" HorizontalAlignment="Center" Command="MediaCommands.MuteVolume" VerticalAlignment="Center" Width="40" Height="40" Style="{StaticResource RoundCorner}">
                                 <Button.Content>
                                     <Image Source="mute.png" Width="30"></Image>
                                 </Button.Content>
                             </Button>
                             <Border Style="{StaticResource BorderStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5, 0, 5, 0">
-                                <Slider Name="PbVolume" Maximum="1" Value="{Binding ElementName=MePlayer, Path=Volume}" MinWidth="100" Margin="3"></Slider>
+                                <Slider Name="SlVolume" Maximum="1" Value="{Binding ElementName=MePlayer, Path=Volume}" MinWidth="100" Margin="3"></Slider>
                             </Border>
                         </StackPanel>
                     </Grid>

@@ -138,5 +138,15 @@ namespace Wimamp
             MePlayer.Volume += (e.Delta > 0) ? 0.1 : -0.1;
         }
 
+        private void MuteVolume_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void MuteVolume_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            MePlayer.IsMuted = !MePlayer.IsMuted;
+            SlVolume.IsEnabled = (!MePlayer.IsMuted);
+        }
     }
 }
