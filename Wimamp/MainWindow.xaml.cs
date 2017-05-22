@@ -156,7 +156,6 @@ namespace Wimamp
         {
             MePlayer.IsMuted = !MePlayer.IsMuted;
             SlVolume.IsEnabled = (!MePlayer.IsMuted);
-            SlVolume.Value = 0;
         }
 
         private void NextTrack_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -174,25 +173,5 @@ namespace Wimamp
             Storyboard sb = (Storyboard)this.stack.FindResource("slide"); stack.Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() => { sb.Begin(); }));
         }
     }
-    public class NegatingConverter : IValueConverter
-    {
-
-        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            if (value is double)
-            {
-                return -((double)value);
-            }
-            return value;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            if (value is double)
-            {
-                return +(double)value + 100;
-            }
-            return value;
-        }
-    }
+    
 }
