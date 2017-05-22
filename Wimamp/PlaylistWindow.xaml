@@ -4,17 +4,24 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wimamp"
+        xmlns:app="clr-namespace:Wimamp" 
         mc:Ignorable="d"
         SizeToContent="Height" Width="415" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Window.Resources>
         <ResourceDictionary Source="styles.xaml" />
     </Window.Resources>
+    <Window.CommandBindings>
+        <CommandBinding Command="local:PlaylistCommands.NewPlaylist" Executed="NewPlaylist_OnExecuted"></CommandBinding>
+        <CommandBinding Command="local:PlaylistCommands.OpenPlaylist" Executed="OpenPlaylist_OnExecuted"></CommandBinding>
+        <CommandBinding Command="local:PlaylistCommands.SavePlaylist" Executed="SavePlaylist_OnExecuted"></CommandBinding>
+
+    </Window.CommandBindings>
     <DockPanel>
         <Menu DockPanel.Dock="Top" Background="DimGray" FontWeight="Bold" Foreground="Black">
                 <MenuItem Header="File">
-                    <MenuItem Header="_New playlist" />
-                    <MenuItem Header="_Open playlist" />
-                    <MenuItem Header="_Save playlist" />
+                <MenuItem Header="_New playlist" Command="local:PlaylistCommands.NewPlaylist"/>
+                <MenuItem Header="_Open playlist" Command="local:PlaylistCommands.OpenPlaylist" />
+                <MenuItem Header="_Save playlist" Command="local:PlaylistCommands.SavePlaylist" />
                 </MenuItem>
                 <MenuItem Header="Playlist">
                     <MenuItem Header="_Play" />
@@ -30,28 +37,23 @@
             </Menu>
             <Grid Background="#181818">
                 <Border Style="{StaticResource BorderStyle}" Margin="5" Padding="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  >
-                    <ListBox Background="Black">
-                        <!-- single item -->
-                        <StackPanel Orientation="Horizontal" Margin="2">
-                            <Label Style="{StaticResource PlaylistItemLabel}">03:47</Label>
-                            <Label Style="{StaticResource PlaylistItemLabel}">Good Band - Some Music</Label>
-                            <Button Style="{StaticResource PlaylistItemPlayButton}" Visibility="Visible" Margin="0, 4, 0, 0">
-                                <Button.Content>
-                                    <Image Source="playIcon.png" Width="15" Height="15"></Image>
-                                </Button.Content>
-                            </Button>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="2">
-                            <Label Style="{StaticResource PlaylistItemLabel}">03:47</Label>
-                            <Label Style="{StaticResource PlaylistItemLabel}">Good Band - Some Music</Label>
-                            <Button Style="{StaticResource PlaylistItemPlayButton}" Visibility="Hidden">
-                                <Button.Content>
-                                    <Image Source="playIcon.png" Width="12" Height="12"></Image>
-                                </Button.Content>
-                            </Button>
-                        </StackPanel>
-                    </ListBox>
+                    <ListBox Background="Black" Name="LbPlaylist" Drop="LbPlaylist_OnDrop" AllowDrop="true" MinHeight="50">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" Margin="2" MouseLeftButtonDown="UIElement_OnMouseLeftButtonDown">
+                                <Label Style="{StaticResource PlaylistItemLabel}" Content="{Binding Duration}"></Label>
+                                <Label Style="{StaticResource PlaylistItemLabel}" Content="{Binding Name}"></Label>
+                                <Button Style="{StaticResource PlaylistItemPlayButton}" Visibility="Visible" Margin="0, 4, 0, 0">
+                                    <Button.Content>
+                                        <Image Source="media/playIcon.png" Width="15" Height="15"></Image>
+                                    </Button.Content>
+                                </Button>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
                 </Border>
             </Grid>
     </DockPanel>
+    
 </Window>

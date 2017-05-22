@@ -2,6 +2,7 @@
 using Microsoft.Win32;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Windows.Threading;
@@ -13,6 +14,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -26,6 +28,7 @@ namespace Wimamp
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static Song CurrentSong { get; set; }
         private PlaylistWindow playlist;
         private bool mediaPlayerIsPlaying = false;
         private bool userIsDraggingSlider = false;
@@ -36,8 +39,9 @@ namespace Wimamp
             DispatcherTimer timer = new DispatcherTimer {Interval = TimeSpan.FromSeconds(1)};
             timer.Tick += Timer_Tick;
             timer.Start();
-
         }
+
+        
 
         private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
@@ -83,7 +87,11 @@ namespace Wimamp
                 Filter = "Media files (*.mp3;*.mpg;*.mpeg)|*.mp3;*.mpg;*.mpeg|All files (*.*)|*.*"
             };
             if (openFileDialog.ShowDialog() == true)
-                MePlayer.Source = new Uri(openFileDialog.FileName);
+            {
+                    MePlayer.Source = new Uri(openFileDialog.FileName);
+                    TbSongName.Text = openFileDialog.SafeFileName;
+            }
+
         }
 
         private void Play_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -148,6 +156,7 @@ namespace Wimamp
         {
             MePlayer.IsMuted = !MePlayer.IsMuted;
             SlVolume.IsEnabled = (!MePlayer.IsMuted);
+            SlVolume.Value = 0;
         }
 
         private void NextTrack_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -158,6 +167,32 @@ namespace Wimamp
         private void PreviousTrack_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             //to do with playlist EMIL
+        }
+
+        private void Stack_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            Storyboard sb = (Storyboard)this.stack.FindResource("slide"); stack.Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() => { sb.Begin(); }));
+        }
+    }
+    public class NegatingConverter : IValueConverter
+    {
+
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            if (value is double)
+            {
+                return -((double)value);
+            }
+            return value;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            if (value is double)
+            {
+                return +(double)value + 100;
+            }
+            return value;
         }
     }
 }
