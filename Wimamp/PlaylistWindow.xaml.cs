@@ -22,7 +22,7 @@ namespace Wimamp
     /// </summary>
     public partial class PlaylistWindow : Window
     {
-        private Playlist currentPlaylist;
+        public Playlist currentPlaylist;
         public PlaylistWindow()
         {
             InitializeComponent();
@@ -58,8 +58,8 @@ namespace Wimamp
                 Song sg = (Song) sp.DataContext;
                 Uri uri = new Uri(sg.Uri);
                 Application.Current.Windows.OfType<MainWindow>().First().MePlayer.Source = uri;
-                MainWindow.CurrentSong = sg;
                 Application.Current.Windows.OfType<MainWindow>().First().TbSongName.Text = sg.Name;
+                currentPlaylist.currentIndex = LbPlaylist.SelectedIndex;
             }
         }
 
@@ -89,6 +89,20 @@ namespace Wimamp
                 LbPlaylist.ItemsSource = currentPlaylist.songs;
             }
 
+        }
+
+        private void SaveCommand_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = LbPlaylist.HasItems;
+        }
+
+        private void PlayPlaylist_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            Application.Current.Windows.OfType<MainWindow>().First().MePlayer.Source = currentPlaylist.Play();
+            LbPlaylist.SelectedIndex = 0;
+            currentPlaylist.currentIndex = 0;
+            Application.Current.Windows.OfType<MainWindow>().First().MePlayer.Play();
+            MainWindow.mediaPlayerIsPlaying = true;
         }
     }
 }

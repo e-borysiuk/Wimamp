@@ -28,10 +28,9 @@ namespace Wimamp
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static Song CurrentSong { get; set; }
         private PlaylistWindow playlist;
-        private bool mediaPlayerIsPlaying = false;
-        private bool userIsDraggingSlider = false;
+        public static bool mediaPlayerIsPlaying = false;
+        public static bool userIsDraggingSlider = false;
 
         public MainWindow()
         {
@@ -41,7 +40,7 @@ namespace Wimamp
             timer.Start();
         }
 
-        
+
 
         private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
@@ -50,6 +49,8 @@ namespace Wimamp
             PlaylistPositioning();
             playlist.Width = this.Width + 2;
             playlist.Show();
+            BtNext.Command = MediaCommands.NextTrack;
+            BtPrevious.Command = MediaCommands.PreviousTrack;
         }
 
         private void MainWindow_OnLocationChanged(object sender, EventArgs e)
@@ -105,22 +106,22 @@ namespace Wimamp
             mediaPlayerIsPlaying = true;
         }
 
-        private void Pause_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        public void Pause_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = mediaPlayerIsPlaying;
         }
 
-        private void Pause_Executed(object sender, ExecutedRoutedEventArgs e)
+        public void Pause_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             MePlayer.Pause();
         }
 
-        private void Stop_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        public void Stop_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = mediaPlayerIsPlaying;
         }
 
-        private void Stop_Executed(object sender, ExecutedRoutedEventArgs e)
+        public void Stop_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             MePlayer.Stop();
             mediaPlayerIsPlaying = false;
@@ -160,17 +161,46 @@ namespace Wimamp
 
         private void NextTrack_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            //to do with playlist EMIL
+            var next = playlist.currentPlaylist.Next();
+            if (next != null)
+            {
+                MePlayer.Source = next;
+                playlist.LbPlaylist.SelectedIndex = playlist.currentPlaylist.currentIndex;
+            }
         }
 
         private void PreviousTrack_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            //to do with playlist EMIL
+            var prev = playlist.currentPlaylist.Previous();
+            if (prev != null)
+            {
+                MePlayer.Source = prev;
+                playlist.LbPlaylist.SelectedIndex = playlist.currentPlaylist.currentIndex;
+            }
         }
 
         private void Stack_OnLoaded(object sender, RoutedEventArgs e)
         {
             Storyboard sb = (Storyboard)this.stack.FindResource("slide"); stack.Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() => { sb.Begin(); }));
+        }
+
+        private void MePlayer_OnMediaEnded(object sender, RoutedEventArgs e)
+        {
+            var next = playlist.currentPlaylist.Next();
+            if (next != null)
+            {
+                MePlayer.Source = next;
+                playlist.LbPlaylist.SelectedIndex = playlist.currentPlaylist.currentIndex;
+            }
+        }
+
+        private void NextTrack_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = playlist.currentPlaylist.currentIndex != playlist.currentPlaylist.songs.Count - 1;
+        }
+        private void PreviousTrack_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = playlist.currentPlaylist.currentIndex != 0;
         }
     }
     

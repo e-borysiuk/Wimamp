@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 using System.Xml;
 using System.Xml.Serialization;
@@ -17,6 +18,8 @@ namespace Wimamp
     [Serializable]
     public class Playlist
     {
+        public int currentIndex = 0;
+
         public Collection<object> songs = new ObservableCollection<object>();
         private List<Song> songsSave = new List<Song>();
         public ListCollectionView View
@@ -75,15 +78,40 @@ namespace Wimamp
             }
         }
 
+        public Uri Play()
+        {
+            if (songs.Count > 0)
+            {
+                var song = (songs.Cast<Song>().ToArray())[0];
+                var uri = new Uri(song.Uri);
+                Application.Current.Windows.OfType<MainWindow>().First().TbSongName.Text = song.Name;
+                return uri;
+            }
+            return null;
+        }
+
         public Uri Next()
         {
+            if (currentIndex != songs.Count - 1)
+            {
+                var song = (songs.Cast<Song>().ToArray())[++currentIndex];
+                var uri = new Uri(song.Uri);
+                Application.Current.Windows.OfType<MainWindow>().First().TbSongName.Text = song.Name;
+                return uri;
+            }
             return null;
         }
 
         public Uri Previous()
         {
+            if (currentIndex != 0)
+            {
+                var song = (songs.Cast<Song>().ToArray())[--currentIndex];
+                var uri = new Uri(song.Uri);
+                Application.Current.Windows.OfType<MainWindow>().First().TbSongName.Text = song.Name;
+                return uri;
+            }
             return null;
-
         }
 
         public Uri Random()

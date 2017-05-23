@@ -80,6 +80,7 @@
     </ApplicationDefinition>
     <Compile Include="NegatingConverter.cs" />
     <Compile Include="PlaylistCommands.cs" />
+    <Compile Include="Properties\Annotations1.cs" />
     <Compile Include="Song.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

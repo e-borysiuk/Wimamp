@@ -7,6 +7,7 @@ namespace Wimamp
         private static RoutedUICommand newPlaylist;
         private static RoutedUICommand openPlaylist;
         private static RoutedUICommand savePlaylist;
+        private static RoutedUICommand playPlaylist;
 
         static PlaylistCommands()
         {
@@ -18,6 +19,9 @@ namespace Wimamp
             typeof(PlaylistCommands));
             savePlaylist = new RoutedUICommand(
             "Zapisz playlistę", "Zapisz",
+            typeof(PlaylistCommands));
+            playPlaylist = new RoutedUICommand(
+            "Odtwórz playlistę", "Odtwórz",
             typeof(PlaylistCommands));
         }
         public static RoutedUICommand NewPlaylist
@@ -31,6 +35,10 @@ namespace Wimamp
         public static RoutedUICommand SavePlaylist
         {
             get { return savePlaylist; }
+        }
+        public static RoutedUICommand PlayPlaylist
+        {
+            get { return playPlaylist; }
         }
     }
 }

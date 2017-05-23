@@ -21,8 +21,8 @@
         <CommandBinding Command="MediaCommands.Stop" CanExecute="Stop_CanExecute" Executed="Stop_Executed" />
         <CommandBinding Command="MediaCommands.MuteVolume" CanExecute="MuteVolume_CanExecute"
                         Executed="MuteVolume_Executed" />
-        <CommandBinding Command="MediaCommands.NextTrack" Executed="NextTrack_Executed" />
-        <CommandBinding Command="MediaCommands.PreviousTrack" Executed="PreviousTrack_Executed" />
+        <CommandBinding Command="MediaCommands.NextTrack" CanExecute="NextTrack_OnCanExecute" Executed="NextTrack_Executed" />
+        <CommandBinding Command="MediaCommands.PreviousTrack" CanExecute="PreviousTrack_OnCanExecute" Executed="PreviousTrack_Executed" />
     </Window.CommandBindings>
     <DockPanel MouseWheel="Grid_MouseWheel">
         <Menu DockPanel.Dock="Top" Background="DimGray" FontWeight="Bold" Foreground="Black">
@@ -126,7 +126,7 @@
                             </Button>
                         </StackPanel>
                     </Grid>
-                    <MediaElement Name="MePlayer" LoadedBehavior="Manual" Stretch="None" />
+                    <MediaElement Name="MePlayer" MediaEnded="MePlayer_OnMediaEnded" LoadedBehavior="Manual" Stretch="None" />
                     <Grid Name="GridControls">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />

@@ -13,8 +13,8 @@
     <Window.CommandBindings>
         <CommandBinding Command="local:PlaylistCommands.NewPlaylist" Executed="NewPlaylist_OnExecuted"></CommandBinding>
         <CommandBinding Command="local:PlaylistCommands.OpenPlaylist" Executed="OpenPlaylist_OnExecuted"></CommandBinding>
-        <CommandBinding Command="local:PlaylistCommands.SavePlaylist" Executed="SavePlaylist_OnExecuted"></CommandBinding>
-
+        <CommandBinding Command="local:PlaylistCommands.SavePlaylist" Executed="SavePlaylist_OnExecuted" CanExecute="SaveCommand_OnCanExecute"></CommandBinding>
+        <CommandBinding Command="local:PlaylistCommands.PlayPlaylist" Executed="PlayPlaylist_OnExecuted"></CommandBinding>
     </Window.CommandBindings>
     <DockPanel>
         <Menu DockPanel.Dock="Top" Background="DimGray" FontWeight="Bold" Foreground="Black">
@@ -23,10 +23,10 @@
                 <MenuItem Header="_Open playlist" Command="local:PlaylistCommands.OpenPlaylist" />
                 <MenuItem Header="_Save playlist" Command="local:PlaylistCommands.SavePlaylist" />
                 </MenuItem>
-                <MenuItem Header="Playlist">
-                    <MenuItem Header="_Play" />
-                    <MenuItem Header="_Pause" />
-                    <MenuItem Header="_Stop" />
+                <MenuItem Header="Play" >
+                    <MenuItem Header="_Play" Command="local:PlaylistCommands.PlayPlaylist"/>
+                    <MenuItem Name="MenuPause" Header="_Pause" />
+                    <MenuItem Name="MenuStop" Header="_Stop" />
                     <Separator />
                     <MenuItem IsCheckable="True" Header="_Shuffle" />
                 </MenuItem>
