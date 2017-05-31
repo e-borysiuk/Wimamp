@@ -89,10 +89,17 @@ namespace Wimamp
             };
             if (openFileDialog.ShowDialog() == true)
             {
-                    MePlayer.Source = new Uri(openFileDialog.FileName);
-                    TbSongName.Text = openFileDialog.SafeFileName;
+                MePlayer.Source = new Uri(openFileDialog.FileName);
+                TbSongName.Text = openFileDialog.SafeFileName;
+                playlist.currentPlaylist = new Playlist();
+                playlist.LbPlaylist.ItemsSource = playlist.currentPlaylist.songs;
+                Song song1 = new Song();
+                song1.Uri = openFileDialog.FileName;
+                var file = TagLib.File.Create(song1.Uri);
+                song1.Duration = file.Properties.Duration.ToString(@"mm\:ss");
+                song1.Name = System.IO.Path.GetFileName(openFileDialog.FileName);
+                playlist.currentPlaylist.songs.Add(song1);
             }
-
         }
 
         private void Play_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -201,6 +208,21 @@ namespace Wimamp
         private void PreviousTrack_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = playlist.currentPlaylist.currentIndex != 0;
+        }
+
+        private void OpenPlaylist_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            Playlist newPlaylist = new Playlist();
+            if (newPlaylist.loadPlaylist())
+            {
+                playlist.currentPlaylist = newPlaylist;
+                playlist.LbPlaylist.ItemsSource = playlist.currentPlaylist.songs;
+            }
+            Application.Current.Windows.OfType<MainWindow>().First().MePlayer.Source = playlist.currentPlaylist.Play();
+            playlist.LbPlaylist.SelectedIndex = 0;
+            playlist.currentPlaylist.currentIndex = 0;
+            Application.Current.Windows.OfType<MainWindow>().First().MePlayer.Play();
+            MainWindow.mediaPlayerIsPlaying = true;
         }
     }
     

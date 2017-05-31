@@ -24,10 +24,8 @@
                 <MenuItem Header="_Save playlist" Command="local:PlaylistCommands.SavePlaylist" />
                 </MenuItem>
                 <MenuItem Header="Play" >
-                    <MenuItem Header="_Play" Command="local:PlaylistCommands.PlayPlaylist"/>
-                    <MenuItem Name="MenuPause" Header="_Pause" />
-                    <MenuItem Name="MenuStop" Header="_Stop" />
-                    <Separator />
+                <MenuItem Header="_Play" Command="local:PlaylistCommands.PlayPlaylist"/>
+                <Separator />
                     <MenuItem IsCheckable="True" Header="_Shuffle" />
                 </MenuItem>
                 <MenuItem Header="Sort">

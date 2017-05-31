@@ -92,6 +92,7 @@ namespace Wimamp
 
         public Uri Next()
         {
+
             if (currentIndex != songs.Count - 1)
             {
                 var song = (songs.Cast<Song>().ToArray())[++currentIndex];

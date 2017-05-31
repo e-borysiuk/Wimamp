@@ -88,6 +88,12 @@ namespace Wimamp
                 currentPlaylist = newPlaylist;
                 LbPlaylist.ItemsSource = currentPlaylist.songs;
             }
+            Application.Current.Windows.OfType<MainWindow>().First().MePlayer.Source = currentPlaylist.Play();
+            LbPlaylist.SelectedIndex = 0;
+            currentPlaylist.currentIndex = 0;
+            Application.Current.Windows.OfType<MainWindow>().First().MePlayer.Play();
+            MainWindow.mediaPlayerIsPlaying = true;
+
 
         }
 

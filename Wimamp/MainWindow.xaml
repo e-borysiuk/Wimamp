@@ -23,15 +23,14 @@
                         Executed="MuteVolume_Executed" />
         <CommandBinding Command="MediaCommands.NextTrack" CanExecute="NextTrack_OnCanExecute" Executed="NextTrack_Executed" />
         <CommandBinding Command="MediaCommands.PreviousTrack" CanExecute="PreviousTrack_OnCanExecute" Executed="PreviousTrack_Executed" />
+        <CommandBinding Command="local:PlaylistCommands.OpenPlaylist" Executed="OpenPlaylist_OnExecuted"></CommandBinding>
     </Window.CommandBindings>
     <DockPanel MouseWheel="Grid_MouseWheel">
         <Menu DockPanel.Dock="Top" Background="DimGray" FontWeight="Bold" Foreground="Black">
             <MenuItem Header="File">
                 <MenuItem Header="_Open file" Command="ApplicationCommands.Open" />
                 <MenuItem Header="_Open folder" />
-                <MenuItem Header="_Open playlist" />
-                <MenuItem Header="_New playlist" />
-                <MenuItem Header="_Save playlist" />
+                <MenuItem Header="_Open playlist" Command="local:PlaylistCommands.OpenPlaylist" />
                 <Separator />
                 <MenuItem Header="_Exit" />
             </MenuItem>
