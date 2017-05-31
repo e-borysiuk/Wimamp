@@ -111,13 +111,13 @@
                         </Border>
 
                         <StackPanel Grid.Row="0" Grid.Column="3">
-                            <Button Name="BtLoop" Margin="10" Padding="2" Width="50" Height="35"
+                            <Button Name="BtLoop" Click="BtLoop_OnClick" Margin="10" Padding="2" Width="50" Height="35"
                                     Style="{StaticResource RoundCorner}">
                                 <Button.Content>
                                     <Image Source="media/loop.png" Width="30" />
                                 </Button.Content>
                             </Button>
-                            <Button Name="BtShuffle" Margin="10, 0, 10, 10" Width="50" Height="35"
+                            <Button Name="BtShuffle" Click="BtShuffle_OnClick" Margin="10, 0, 10, 10" Width="50" Height="35"
                                     Style="{StaticResource RoundCorner}">
                                 <Button.Content>
                                     <Image Source="media/shuffle.png" Width="30" />

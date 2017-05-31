@@ -92,7 +92,15 @@ namespace Wimamp
 
         public Uri Next()
         {
-
+            if (MainWindow.shuffle)
+            {
+                Random rnd = new Random();
+                currentIndex = rnd.Next(0, songs.Count - 1);
+                var song = (songs.Cast<Song>().ToArray())[currentIndex];
+                var uri = new Uri(song.Uri);
+                Application.Current.Windows.OfType<MainWindow>().First().TbSongName.Text = song.Name;
+                return uri;
+            }
             if (currentIndex != songs.Count - 1)
             {
                 var song = (songs.Cast<Song>().ToArray())[++currentIndex];

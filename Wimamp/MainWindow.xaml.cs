@@ -31,6 +31,8 @@ namespace Wimamp
         private PlaylistWindow playlist;
         public static bool mediaPlayerIsPlaying = false;
         public static bool userIsDraggingSlider = false;
+        public static bool loop = false;
+        public static bool shuffle = false;
 
         public MainWindow()
         {
@@ -193,6 +195,12 @@ namespace Wimamp
 
         private void MePlayer_OnMediaEnded(object sender, RoutedEventArgs e)
         {
+            if (loop)
+            {
+                MePlayer.Position = TimeSpan.Zero;
+                MePlayer.Play();
+                return;
+            }
             var next = playlist.currentPlaylist.Next();
             if (next != null)
             {
@@ -223,6 +231,42 @@ namespace Wimamp
             playlist.currentPlaylist.currentIndex = 0;
             Application.Current.Windows.OfType<MainWindow>().First().MePlayer.Play();
             MainWindow.mediaPlayerIsPlaying = true;
+        }
+
+        private void BtLoop_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (loop)
+            {
+                loop = false;
+                Image img = new Image();
+                img.Source = new BitmapImage(new Uri(@"/Wimamp;component/media/loop.png", UriKind.Relative));
+                BtLoop.Content = img;
+            }
+            else
+            {
+                loop = true;
+                Image img = new Image();
+                img.Source = new BitmapImage(new Uri(@"/Wimamp;component/media/loopActive.png", UriKind.Relative));
+                BtLoop.Content = img;
+            }
+        }
+
+        private void BtShuffle_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (shuffle)
+            {
+                shuffle = false;
+                Image img = new Image();
+                img.Source = new BitmapImage(new Uri(@"/Wimamp;component/media/shuffle.png", UriKind.Relative));
+                BtShuffle.Content = img;
+            }
+            else
+            {
+                shuffle = true;
+                Image img = new Image();
+                img.Source = new BitmapImage(new Uri(@"/Wimamp;component/media/shuffleActive.png", UriKind.Relative));
+                BtShuffle.Content = img;
+            }
         }
     }
     
